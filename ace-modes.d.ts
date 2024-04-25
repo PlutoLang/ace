@@ -1033,6 +1033,14 @@ declare module "ace-code/src/mode/plsql" {
     export const Mode: new () => import(".").Ace.SyntaxMode;
 }
 
+declare module "ace-code/src/mode/pluto_highlight_rules" {
+    export const PlutoHighlightRules: new () => import(".").Ace.HighlightRules;
+}
+
+declare module "ace-code/src/mode/pluto" {
+    export const Mode: new () => import(".").Ace.SyntaxMode;
+}
+
 declare module "ace-code/src/mode/powershell_highlight_rules" {
     export const PowershellHighlightRules: new () => import(".").Ace.HighlightRules;
 }
