@@ -183,6 +183,7 @@ var supportedModes = {
     PHP_Laravel_blade: ["blade.php"],
     Pig:         ["pig"],
     PLSQL:       ["plsql"],
+    Pluto:       ["pluto|lua"],
     Powershell:  ["ps1"],
     Praat:       ["praat|praatscript|psc|proc"],
     Prisma:      ["prisma"],
