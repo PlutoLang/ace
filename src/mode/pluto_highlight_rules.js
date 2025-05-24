@@ -106,6 +106,30 @@ var PlutoHighlightRules = function() {
             }]
         }, {
             token: [
+                "storage.modifier.function.preprocessoralias.pluto",
+                "meta.preprocessoralias.pluto",
+                "meta.preprocessoralias.pluto",
+                "punctuation.separator.parameter.pluto",
+                "entity.name.function.preprocessoralias.pluto",
+                "meta.preprocessoralias.pluto",
+                "punctuation.section.group.begin.pluto"
+            ],
+            regex: /(\$alias)(?:(\s+)(?:([a-zA-Z_][a-zA-Z0-9_]*)([.:]))?([a-zA-Z_][a-zA-Z0-9_]*))?(\s*)(\()/,
+            push: [{
+                token: "punctuation.section.group.end.pluto",
+                regex: /\)/,
+                next: "pop"
+            }, {
+                token: "variable.parameter.preprocessoralias.pluto",
+                regex: /[a-zA-Z_][a-zA-Z0-9_]*/
+            }, {
+                token: "punctuation.separator.comma.pluto",
+                regex: /,/
+            }, {
+                defaultToken: "meta.preprocessoralias.pluto"
+            }]
+        }, {
+            token: [
                 "storage.type.function.pluto",
                 "punctuation.separator.parameter.pluto",
                 "meta.function.incomplete.pluto",
@@ -139,6 +163,21 @@ var PlutoHighlightRules = function() {
         }, {
             token: "punctuation.section.group.end.pluto",
             regex: /\)/
+        }, {
+            token: [
+                "text",
+                "punctuation.definition.string.begin.pluto"
+            ],
+            regex: /(?<=[\.\:]cdef|ffi\.struct)(\s*)(\[=*\[)/,
+            push: [{
+                token: "punctuation.definition.string.end.pluto",
+                regex: /\]=*\]/,
+                next: "pop"
+            }, {
+                include: "source.c"
+            }, {
+                defaultToken: "meta.embedded.pluto"
+            }]
         }, {
             token: "punctuation.definition.string.begin.pluto",
             regex: /(?<!--)\[=*\[/,
@@ -209,7 +248,7 @@ var PlutoHighlightRules = function() {
             regex: /<(?:const|close)>/
         }, {
             token: "storage.modifier.pluto",
-            regex: /\$define\b/
+            regex: /\$(?:define|alias)\b/
         }, {
             token: "keyword.operator.logical.pluto",
             regex: /\+|-|%|#|\*|\/|\^|==|~=|!=|<=?|>=?|(?<!\.)\.{2}(?!\.)|\$|\||~|&/
@@ -265,7 +304,7 @@ var PlutoHighlightRules = function() {
                 "meta.enum.pluto",
                 "keyword.control.pluto"
             ],
-            regex: /\b((?:pluto_)?enum(?:\s+class)?)(?:(\s+)(begin)|(\s+)((?:[a-zA-Z_][a-zA-Z0-9_]*)?)(?:(\s+)(begin))?)?/
+            regex: /\b((?:pluto_)?enum\b(?:\s+class)?)(?:(\s+)(begin|do)|(\s+)((?:[a-zA-Z_][a-zA-Z0-9_]*)?)(?:(\s+)(begin|do))?)?/
         }, {
             token: [
                 "storage.modifier.extends.pluto",
@@ -301,13 +340,16 @@ var PlutoHighlightRules = function() {
             regex: /\b(?<!\.)(local|global)(\s+)(?!class)(?!pluto_class)(?!function)(?:(and|break|do|else|elseif|end|false|for|function|goto|if|in|local|nil|not|or|repeat|pluto_use|pluto_switch|pluto_continue|pluto_enum|pluto_new|pluto_class|pluto_export|pluto_try|pluto_catch|switch|continue|enum|new|class|export|try|catch|return|then|true|until|while)\b|(\w+))(?:(\s*)(:)(\s+)(\??(?:(?:string|number|int|float|bool(?:ean)?|function|table|userdata)\|)*(?:string|number|int|float|bool(?:ean)?|function|table|userdata)\??))?/
         }, {
             token: "storage.modifier.pluto",
-            regex: /\b(?<![.\:])(?:local|global|static|export|pluto_export)\b/
+            regex: /\b(?<![.\:])(?:local|global|export|pluto_export)\b/
+        }, {
+            token: "storage.modifier.pluto",
+            regex: /\b(?<![.\:])static(?!\s*\()\b/
         }, {
             token: "constant.language.pluto",
             regex: /(?<![^.]\.|:)\b(?:false|nil|true)\b|(?<![.])\.\.\.(?!\.)/
         }, {
             token: "constant.language.pluto support.constant.builtin.pluto",
-            regex: /(?<![^.]\.|:)\b(?:_G|_VERSION|_PVERSION|_PSOUP|math\.(?:pi|huge|mininteger|maxinteger)|os\.platform|json\.(?:null|withnull|withorder))\b/
+            regex: /(?<![^.]\.|:)\b(?:_G|_VERSION|_PVERSION|math\.(?:pi|huge|mininteger|maxinteger)|os\.(?:platform|arch)|json\.(?:null|withnull|withorder))\b/
         }, {
             token: "variable.language.self.pluto",
             regex: /(?<![^.]\.|:)\bself\b/
@@ -386,6 +428,9 @@ var PlutoHighlightRules = function() {
         }, {
             token: "constant.numeric.integer.binary.pluto",
             regex: /0[bB][01][01_]*/
+        }, {
+            token: "constant.numeric.integer.octal.pluto",
+            regex: /0[oO][0-7][0-7_]*/
         }, {
             token: "constant.numeric.integer.pluto",
             regex: /(?<![\w\d])\d[0-9_]*(?![pPeE.0-9])/
